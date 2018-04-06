@@ -3,13 +3,13 @@ Diagnositics for Service Fabric(ETW) and App Service(Tablestorage provider exten
 
 The idea of this application is to have a common logger implmentation for both Service Fabric and App Service.
 
-Also we can achieve to use the same Table storage(log table) for n number of Service Fabric and n number of App Service.
+By this approach we can use the same Table storage(log table) for n number of Service Fabric and n number of App Service.
 
-Also, logger can be called by simply registering with service fabric or app service.
+Additionaly, logger can be called by simply registering it with service fabric or app service.
 
 I have tried to decouple the depedencies for both testability and adaptability
 
-This sample application will show how to log service fabric application with ETW which will finally log into table storage.
+This sample application will demonstrate how to log service fabric application with ETW(This will finally log into table storage).
 
 This can be either configured in ARM to move ETW data to table storage (This will avoid chatty calls)
 
