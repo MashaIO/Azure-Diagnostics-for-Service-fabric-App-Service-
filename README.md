@@ -5,9 +5,17 @@ The idea of this application is to have a common logger implmentation for both S
 
 Also we can achieve to use the same Table storage(log table) for n number of Service Fabric and n number of App Service.
 
+Also, logger can be called by simply registering with service fabric or app service.
+
 I have tried to decouple the depedencies for both testability and adaptability
 
 This sample application will show how to log service fabric application with ETW which will finally log into table storage.
+
+This can be either configured in ARM to move ETW data to table storage (This will avoid chatty calls)
+
+or 
+
+we can have a custom event listeners to log the events as data in data store (Table storage , AppInsights....)
 
 Along with service fabric logging this application also shows how to log azure services (Event listner is used to log it in table storage)
 
@@ -23,7 +31,7 @@ Along with service fabric logging this application also shows how to log azure s
 
 # Service Fabric
 
-In your Startup you can see how logger is configured. By this we can say it is an decoupled one which will help in both testing and adaptability.
+In your Startup you can see how logger is configured and registered.
 
                       
             // Configure the required factories to the array(In our case this is service fabric so that Service fabric event source more than enough)
@@ -65,7 +73,7 @@ Testing the log(HelloContoller.cs)
  
  In global.asax file of WebApi project. You see how to enable events and configure the even source for App service.
  
- We will using the table storage as the provider.
+ We will be using the table storage as the provider. Any event listener can be configured.
             
             //Sets up the provider specific details. 
             const string tableStorageEventListener = "TableStorageEventListener";
@@ -122,4 +130,4 @@ Notice the changes required for associating a table storage log table to service
 
 # Note
 
-I have modifed Microsoft.Diagnostics.EventListeners/TableStorageEventListener.cs/ToTableEntity method to make the log table as same as service fabric. So its up to you to use the original one or the other one.
+I have modifed Microsoft.Diagnostics.EventListeners/TableStorageEventListener.cs/ToTableEntity method to make the log table as same as service fabric. So its up to you to use the default schema or an custom schema.
